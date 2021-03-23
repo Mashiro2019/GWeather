@@ -7,7 +7,6 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <ScrollView
             android:id="@+id/home_activity_data_fragment"
             android:layout_width="match_parent"
@@ -109,6 +108,7 @@
                         android:layout_height="match_parent"
                         android:baselineAligned="false"
                         android:orientation="horizontal"
+                        android:background="#152C39"
                         android:padding="6sp">
 
                         <LinearLayout
@@ -137,7 +137,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:text="@string/visibility"
-                                android:textColor="#617695" />
+                                android:textColor="@color/white" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -166,7 +166,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:text="@string/humidity"
-                                android:textColor="#617695" />
+                                android:textColor="@color/white" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -195,7 +195,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:text="@string/wind_speed"
-                                android:textColor="#617695" />
+                                android:textColor="@color/white" />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -210,144 +210,8 @@
                     <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
                         android:id="@+id/airQualityChartView"
                         android:layout_width="match_parent"
-                        android:layout_height="350sp" />
+                        android:layout_height="600dp" />
                 </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/windInfCardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5sp"
-                    app:cardCornerRadius="10sp"
-                    app:cardElevation="5sp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <app.futured.donut.DonutProgressView
-                            android:id="@+id/wind_direction_degree_amount_donut"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5sp"
-                            android:layout_weight="2"
-                            app:donut_bgLineColor="@color/clouds"
-                            app:donut_gapAngle="270"
-                            app:donut_gapWidth="1"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/windDirectionDegreeName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:text="@string/wind_direction_degree"
-                                android:textColor="#3867d6"
-                                app:drawableStartCompat="@drawable/ic_dot_royal_blue" />
-
-                            <TextView
-                                android:id="@+id/windDirectionDegreeValue"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:text="@string/test"
-                                android:textColor="#3867d6" />
-
-                            <TextView
-                                android:id="@+id/windDirectionName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:text="@string/wind_direction_degree"
-                                android:textColor="@color/orange"
-                                app:drawableStartCompat="@drawable/ic_dot_orange" />
-
-                            <TextView
-                                android:id="@+id/windDirectionValue"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:text="@string/test"
-                                android:textColor="@color/orange" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <androidx.cardview.widget.CardView
-                        style="@style/MyCardView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="150sp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                style="@style/CustomizePageSubTitle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:drawablePadding="5sp"
-                                android:gravity="center_vertical"
-                                android:text="@string/update"
-                                android:textStyle="bold"
-                                app:drawableStartCompat="@drawable/update_icon" />
-
-                            <TextView
-                                android:id="@+id/updateTimeTextView"
-                                style="@style/CustomizePageSubTitle"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="@string/test" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        style="@style/MyCardView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="150sp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                style="@style/CustomizePageSubTitle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:drawablePadding="5sp"
-                                android:gravity="center_vertical"
-                                android:text="@string/address"
-                                android:textStyle="bold"
-                                app:drawableStartCompat="@drawable/address_icon" />
-
-                            <TextView
-                                android:id="@+id/updateAddressTextView"
-                                style="@style/CustomizePageSubTitle"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="@string/test" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>

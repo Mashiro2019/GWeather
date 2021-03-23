@@ -1,32 +1,42 @@
 package com.example.gweather.fragment
 
-import android.content.Intent
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.gweather.Constant
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gweather.R
-import com.example.gweather.activity.AddCityActivity
-import com.example.gweather.activity.SearchCityActivity
+import com.example.gweather.adapter.BindingAdapterItem
+import com.example.gweather.adapter.MyBindingAdapter
 import com.example.gweather.databinding.CityFragmentBinding
-import com.example.gweather.viewModel.WeatherDataViewModel
+import com.example.gweather.model.City
+import com.example.gweather.model.PlaceInf
+import com.example.gweather.viewModel.HomeActivityViewModel
 
 class CityFragment : Fragment() {
 
     private val viewModel by lazy {
-        ViewModelProvider(requireActivity())[WeatherDataViewModel::class.java]
+        ViewModelProvider(requireActivity())[HomeActivityViewModel::class.java]
     }
 
     private lateinit var binding:CityFragmentBinding
 
+    private val cityList:MutableList<BindingAdapterItem> = ArrayList()
+    private val adapter = MyBindingAdapter(cityList)
+    private lateinit var layoutManager:LinearLayoutManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.city_fragment,
@@ -36,31 +46,45 @@ class CityFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        //设置设备搜索
-        binding.searchCity.setOnClickListener {
-            val intent = Intent(activity, SearchCityActivity::class.java)
-            startActivityForResult(intent,Constant.SEARCH_ACTIVITY)
-        }
-        //设置设备管理
-        binding.addCity.setOnClickListener {
-            val intent = Intent(activity, AddCityActivity::class.java)
-            startActivity(intent)
-        }
-    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Constant.RESULT_OK){
-            when(requestCode){
-                Constant.SEARCH_ACTIVITY -> {
-                    if (data != null) {
-                        data.getStringExtra("city_id")?.let { viewModel.searchPlaces(it) }
-                        viewModel.setCurrentPage(1)
-                    }
+        layoutManager = LinearLayoutManager(binding.root.context)
+        //设置设备搜索
+        binding.searchView.isSubmitButtonEnabled = true
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d("CityFragment",query.toString())
+                query?.let { viewModel.searchCity(it) }
+                return false
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.Q)
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+        adapter.setItemClick(object : MyBindingAdapter.ItemClick {
+            override fun onItemClickListener(position: Int) {
+                val city = cityList[position] as PlaceInf
+                viewModel.setPlaceInf(city)
+                viewModel.setCurrentPage(0)
+            }
+        })
+        binding.cityList.adapter = adapter
+        binding.cityList.layoutManager = layoutManager
+
+        viewModel.cityListJson.observe(viewLifecycleOwner){result->
+            val cities = result.getOrNull()
+            cityList.clear()
+            if (cities != null){
+                for(item in cities){
+                    cityList.add(item)
                 }
             }
+            adapter.notifyDataSetChanged()
         }
     }
 }

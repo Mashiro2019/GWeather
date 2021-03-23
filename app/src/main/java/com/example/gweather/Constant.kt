@@ -36,19 +36,19 @@ object Constant : Serializable {
     const val MSG_GOT_DATA = 5
 
     /**
-     * Activity_REQUEST_CODE
+     * HomeActivity标识符
      */
-    const val Activity_REQUEST_CODE = 100
+    const val HOME_ACTIVITY_CODE = 1
 
     /**
-     * DIALOG setTargetFragment()传输数据使用
+     * SignInActivity标识符
      */
-    const val DIALOG_REQUEST_CODE = 101
+    const val SIGN_IN_ACTIVITY_CODE = 1
 
     /**
-     * DIALOG show()传输数据使用
+     * SignUpActivity标识符
      */
-    const val DIALOG = 102
+    const val SIGN_UP_ACTIVITY_CODE = 1
 
     /**
      * 出错

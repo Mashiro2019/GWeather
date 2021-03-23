@@ -12,32 +12,34 @@ import com.example.gweather.utils.AppUtils
  */
 class SimpleDailyWeather(
     val date:String,
-    val text_day:String,
+    private val text_day:String,
     private val code_day:String,
     private val text_night:String,
     private val code_night:String,
     val high:String,
     val low:String,
+    val windSpeed:String,
+    val humidity:String
 ): BindingAdapterItem {
     override fun getViewType(): Int {
         return R.layout.item_daily_weather
     }
 
-    private val icon: Drawable? = when(text_day){
+    private val icon: String = when(text_day){
         "晴"->
-            ContextCompat.getDrawable(AppUtils.context,R.drawable.sunny_day)
+            AppUtils.context.resources.getString(R.string.ic_sunny_day)
         "多云"->
-            ContextCompat.getDrawable(AppUtils.context,R.drawable.partly_cloudy)
+            AppUtils.context.resources.getString(R.string.ic_partly_cloudy)
         "阵雨"->
-            ContextCompat.getDrawable(AppUtils.context,R.drawable.light_rain)
+            AppUtils.context.resources.getString(R.string.ic_shower)
         "阴"->
-            ContextCompat.getDrawable(AppUtils.context,R.drawable.partly_cloudy)
+            AppUtils.context.resources.getString(R.string.ic_cloudy_day)
         "雾"->
-            ContextCompat.getDrawable(AppUtils.context,R.drawable.partly_cloudy)
-        else -> ContextCompat.getDrawable(AppUtils.context,R.drawable.sunny_day)
+            AppUtils.context.resources.getString(R.string.ic_fog)
+        else ->AppUtils.context.resources.getString(R.string.ic_sunny_day)
     }
 
-    fun getIcon(): Drawable? {
+    fun getIcon(): String {
         return icon
     }
 }

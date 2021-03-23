@@ -1,15 +1,15 @@
 package com.example.gweather.activity
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import android.widget.TextView
-import androidx.core.view.GravityCompat
+import android.provider.Settings
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.gweather.R
 import com.example.gweather.adapter.FragmentAdapter
@@ -17,36 +17,34 @@ import com.example.gweather.databinding.ActivityHomeBinding
 import com.example.gweather.fragment.CityFragment
 import com.example.gweather.fragment.DataFragment
 import com.example.gweather.fragment.HomeFragment
-import com.example.gweather.model.User
 import com.example.gweather.utils.AmapUtils
-import com.example.gweather.viewModel.WeatherDataViewModel
+import com.example.gweather.viewModel.HomeActivityViewModel
+import kotlinx.coroutines.launch
 import nl.joery.animatedbottombar.AnimatedBottomBar
 
 
-class HomeActivity : BaseActivity() {
-    private lateinit var user: User
+class HomeActivity : AppCompatActivity() {
+    companion object{
+        const val GPS_SETTING = 100
+    }
 
     private lateinit var binding: ActivityHomeBinding
 
     private val viewModel by lazy {
-        ViewModelProvider(this)[WeatherDataViewModel::class.java]
+        ViewModelProvider(this)[HomeActivityViewModel::class.java]
     }
 
-    //添加主界面Fragment
     private val fragments = ArrayList<Fragment>()
-
-    /**
-     * 应用启动时初次刷新
-     */
-    private var isFirstUpdate: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_home)
 
+        AmapUtils.startClient()
+
         initUI()
 
-        viewModel.searchPlaces(AmapUtils.getLocation())
+        isGpsOPen()
 
         viewModel.currentPage.observe(this){
             binding.viewPager.currentItem = it
@@ -64,21 +62,12 @@ class HomeActivity : BaseActivity() {
                 override fun onPageSelected(i: Int) {
                     // Selecting a tab at a specific position
                     binding.bottomNavView.selectTabAt(i)
-                    if (i == 1 && isFirstUpdate) {
-                        val dataFragment: DataFragment =
-                            fragments[i] as DataFragment
-                        dataFragment.getSelectedMessage()
-                        isFirstUpdate = false //设置为false
-                    }
                 }
 
                 override fun onPageScrollStateChanged(i: Int) {}
             })
         }
 
-        /**
-         * 底部导航栏点击事件
-         */
         binding.bottomNavView.setOnTabSelectListener(object : AnimatedBottomBar.OnTabSelectListener {
             override fun onTabSelected(
                 lastIndex: Int,
@@ -92,19 +81,11 @@ class HomeActivity : BaseActivity() {
             // An optional method that will be fired whenever an already selected tab has been selected again.
             override fun onTabReselected(index: Int, tab: AnimatedBottomBar.Tab) {
                 binding.viewPager.currentItem = index
-                if (index == 1 && isFirstUpdate) {
-                    val dataFragment: DataFragment =
-                        fragments[index] as DataFragment
-                    dataFragment.getSelectedMessage()
-                    isFirstUpdate = false //设置为false
-                }
             }
         })
     }
 
     private fun initUI() {
-
-        user = intent.getSerializableExtra("userData") as User
 
         fragments.apply {
             add(HomeFragment())
@@ -118,53 +99,45 @@ class HomeActivity : BaseActivity() {
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeAsUpIndicator(R.mipmap.title_bar)
         }
-
-        //默认选中Mail
-        binding.sidebarView.apply {
-            //setCheckedItem(R.id.navMail)
-            setNavigationItemSelectedListener {
-                when(it.itemId){
-                    R.id.navLocation->{
-                        val dialog = AlertDialog.Builder(binding.sidebarView.context)
-                        dialog.apply {
-                            setTitle("当前位置")
-                            setIcon(R.drawable.address_icon)
-                            setMessage(AmapUtils.getAddress())
-                            setPositiveButton("确定") { dialog, _ ->
-                                dialog.cancel()
-                            }
-                        }
-                        dialog.show()
-                    }
-
-                    R.id.navExit->{
-                        //退出登录
-                        val intent = Intent("com.example.takisukaze.SIGN_OUT")
-                        sendBroadcast(intent)
-                    }
-                }
-                true
-            }
-        }
     }
-
-    @SuppressLint("InflateParams")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            //打开侧边栏
-            android.R.id.home -> {
-                binding.drawerLayout.openDrawer(GravityCompat.START)
-                //打开时赋值
-                binding.sidebarView.findViewById<TextView>(R.id.userName).text = user.username
-                binding.sidebarView.findViewById<TextView>(R.id.mailText).text = user.email
-            }
-        }
-        return true
-    }
-
 
     override fun onDestroy() {
         super.onDestroy()
         AmapUtils.destroyClient()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            GPS_SETTING->{
+                isGpsOPen()
+            }
+        }
+    }
+
+    private fun isGpsOPen(){
+        //判断GPS是否打开
+        if(AmapUtils.isOPen(this)){
+            Log.i("HomeActivity","定位已经打开")
+            var location: String
+            lifecycleScope.launch {
+                location = AmapUtils.getLocation()
+                viewModel.searchPlaces(location)
+                viewModel.setGpsStatus(true)
+            }
+        }else{
+            viewModel.setGpsStatus(false)
+            Log.i("HomeActivity","定位未打开")
+            AlertDialog.Builder(this)
+                .setTitle("提示消息")
+                .setMessage("定位未打开,请前往设置界面打开")
+                .setPositiveButton("确定"
+                ) { _, _ ->
+                    val settingsIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    startActivityForResult(settingsIntent, GPS_SETTING)
+                }
+                .setNegativeButton("取消",null)
+                .create().show()
+        }
     }
 }

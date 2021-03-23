@@ -14,11 +14,12 @@ import com.example.gweather.R
  *作者:created by HP on 2021/3/8 17:23
  *邮箱:sakurajimamai2020@qq.com
  */
-class MyBindingAdapter(private var items: MutableList<BindingAdapterItem>) : RecyclerView.Adapter<MyBindingAdapter.BindingHolder>() {
+class MyBindingAdapter(private var items: MutableList<BindingAdapterItem>) :
+    RecyclerView.Adapter<MyBindingAdapter.BindingHolder>() {
 
     private var itemClick: ItemClick? = null
 
-    fun setItemClick(itemClick: ItemClick){
+    fun setItemClick(itemClick: ItemClick) {
         this.itemClick = itemClick
     }
 
@@ -32,7 +33,7 @@ class MyBindingAdapter(private var items: MutableList<BindingAdapterItem>) : Rec
         }
     }
 
-    interface ItemClick{
+    interface ItemClick {
         fun onItemClickListener(position: Int)
     }
 
@@ -58,7 +59,4 @@ class MyBindingAdapter(private var items: MutableList<BindingAdapterItem>) : Rec
             binding.setVariable(BR.item, item)
         }
     }
-
-
 }
-

@@ -26,7 +26,6 @@ class AppUtils:Application(){
         super.onCreate()
         context = applicationContext
 
-        bluetoothIcon = Typeface.createFromAsset(applicationContext.assets,"fonts/bluetoothIcon.ttf")
         appIcon = Typeface.createFromAsset(applicationContext.assets,"fonts/appIcon.ttf")
         managerFragment = Typeface.createFromAsset(applicationContext.assets,"fonts/managerFragment.ttf")
         iconDesign = Typeface.createFromAsset(applicationContext.assets,"fonts/iconDesign.ttf")

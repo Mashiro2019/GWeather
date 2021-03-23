@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.gweather.R
 import com.example.gweather.adapter.BindingAdapterItem
 import com.example.gweather.adapter.MyBindingAdapter
@@ -16,7 +16,7 @@ import com.example.gweather.databinding.HomeFragmentBinding
 import com.example.gweather.model.SimpleDailyWeather
 import com.example.gweather.utils.AppUtils
 import com.example.gweather.utils.PopupWindowUtils
-import com.example.gweather.viewModel.WeatherDataViewModel
+import com.example.gweather.viewModel.HomeActivityViewModel
 
 class HomeFragment:Fragment() {
 
@@ -24,12 +24,12 @@ class HomeFragment:Fragment() {
 
     //获取ViewModel
     private val viewModel by lazy {
-        ViewModelProvider(requireActivity())[WeatherDataViewModel::class.java]
+        ViewModelProvider(requireActivity())[HomeActivityViewModel::class.java]
     }
 
     private val dailyWeatherList:MutableList<BindingAdapterItem> = ArrayList()
     private val adapter = MyBindingAdapter(dailyWeatherList)
-    private lateinit var layoutManager:LinearLayoutManager
+    private lateinit var layoutManager:StaggeredGridLayoutManager
 
     //加载布局
     override fun onCreateView(
@@ -43,11 +43,11 @@ class HomeFragment:Fragment() {
             container,
             false
         )
-        layoutManager = LinearLayoutManager(binding.root.context)
+        layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
         return binding.root
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -62,10 +62,6 @@ class HomeFragment:Fragment() {
         })
         binding.dailyWeatherList.adapter = adapter
         binding.dailyWeatherList.layoutManager = layoutManager
-
-        binding.seeTodayWeather.setOnClickListener {
-            viewModel.setCurrentPage(1)
-        }
 
         viewModel.apply {
             /**
@@ -110,6 +106,10 @@ class HomeFragment:Fragment() {
                 }
             })
 
+            placeInf.observe(viewLifecycleOwner){
+                binding.cityName.text = it.name
+            }
+
             dailyWeatherResult.observe(viewLifecycleOwner){res->
                 val list = res.getOrNull()
                 if(list!=null){
@@ -117,9 +117,19 @@ class HomeFragment:Fragment() {
                     dailyWeatherList.clear()
                     for (item in daily){
                         dailyWeatherList.add(SimpleDailyWeather(item.date,
-                            item.text_day,item.code_day,item.text_night,item.code_night,item.high,item.low))
+                            item.text_day,item.code_day,item.text_night,item.code_night,item.high,item.low,item.windSpeed,item.humidity))
                     }
                     adapter.notifyDataSetChanged()
+                }
+            }
+
+            isGpsOpen.observe(viewLifecycleOwner){it->
+                if(it){
+                    binding.dailyWeatherList.visibility = View.VISIBLE
+                    binding.progressBar.visibility = View.GONE
+                }else{
+                    binding.dailyWeatherList.visibility = View.GONE
+                    binding.progressBar.visibility = View.VISIBLE
                 }
             }
         }

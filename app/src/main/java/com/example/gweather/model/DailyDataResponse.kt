@@ -48,4 +48,4 @@ data class DailyWeather(val date:String,
                         @SerializedName("wind_direction_degree") val windDirectionDegree:String,
                         @SerializedName("wind_speed") val windSpeed:String,
                         @SerializedName("wind_scale") val windScale:String,
-                        private val humidity:String)
+                        val humidity:String)
