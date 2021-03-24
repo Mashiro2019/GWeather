@@ -23,7 +23,5 @@ object ServiceCreator {
 
     fun <T> weatherCreate(serviceClass:Class<T>):T = weatherRetrofit.create(serviceClass)
 
-    fun <T> userCreate(serviceClass:Class<T>):T = userRetrofit.create(serviceClass)
-
     //inline fun <reified T> create():T = create(T::class.java)
 }

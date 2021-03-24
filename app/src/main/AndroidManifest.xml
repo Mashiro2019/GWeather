@@ -2,12 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.gweather">
-    <!-- 蓝牙权限 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <uses-feature android:name="android.hardware.location.gps" /> <!-- MySQL权限 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 访问设备状态 -->
@@ -23,24 +17,29 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
     <application
-        android:name="com.example.gweather.utils.AppUtils"
+        android:name=".utils.AppUtils"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name="com.example.gweather.activity.SignUpActivity" />
-        <activity android:name="com.example.gweather.activity.SignInActivity" />
-        <activity android:name="com.example.gweather.activity.SearchCityActivity" />
+        <activity
+            android:name=".activity.BaseActivity"
+            android:exported="true">
+        </activity>
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="d40a23603ab4e7892f07f6ac6b2c9aef" />
+            android:value="2a076ec82fd6810af5f22216221d8e4c" />
+
         <service android:name="com.amap.api.location.APSService" />
-        <activity android:name="com.example.gweather.activity.AddCityActivity" />
-        <activity android:name="com.example.gweather.activity.HomeActivity">
+
+        <activity android:name=".activity.HomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

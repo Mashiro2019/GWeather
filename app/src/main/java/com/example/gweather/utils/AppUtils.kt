@@ -15,8 +15,6 @@ class AppUtils:Application(){
 
         //心知天气私钥
         const val TOKEN = "SIdsDE0o7sEAIFYnM"
-        //字体设置
-        lateinit var bluetoothIcon:Typeface
         lateinit var appIcon:Typeface
         lateinit var managerFragment:Typeface
         lateinit var iconDesign:Typeface

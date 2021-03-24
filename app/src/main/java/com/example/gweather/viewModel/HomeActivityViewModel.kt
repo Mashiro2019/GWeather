@@ -6,9 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.gweather.model.AQDailyAirQuality
-import com.example.gweather.model.City
 import com.example.gweather.model.PlaceInf
-import com.example.gweather.model.User
 import com.example.gweather.network.Repository
 import com.github.aachartmodel.aainfographics.aachartcreator.*
 import com.github.aachartmodel.aainfographics.aaoptionsmodel.*

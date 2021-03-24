@@ -63,12 +63,6 @@ object AmapUtils {
     }
 
     /**
-     * 获取当前地理位置描述
-     * @return String
-     */
-    fun getAddress() = address
-
-    /**
      * 启动定位客户端，同时启动本地定位服务。
      */
     fun startClient() {

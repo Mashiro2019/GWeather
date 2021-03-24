@@ -1,7 +1,5 @@
 package com.example.gweather.network
 
-import com.example.gweather.model.Account
-import com.example.gweather.model.City
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,12 +12,9 @@ object Network {
     private val placeWeatherService = ServiceCreator.weatherCreate(PlaceWeatherService::class.java)
     //天气信息动态代理对象
     private val placeService = ServiceCreator.weatherCreate(PlaceService::class.java)
-    //城市信息动态代理对象
-    private val cityService = ServiceCreator.userCreate(CityService::class.java)
+
     //空气质量信息动态代理对象
     private val AQService = ServiceCreator.weatherCreate(AirQualityService::class.java)
-    //用户信息动态代理对象
-    private val userService = ServiceCreator.userCreate(UserService::class.java)
 
     suspend fun searchPlaceWeather(
         location:String
@@ -32,20 +27,6 @@ object Network {
     suspend fun searchPlace(
         location:String
     ) = placeService.searchPlace(location).await()
-
-    suspend fun searchCity() = cityService.searchCity().await()
-
-    suspend fun addCity(
-        city: City
-    ) = cityService.addCity(city).await()
-
-    suspend fun userLogin(
-        username:String,password:String
-    ) = userService.userLogin(username, password).await()
-
-    suspend fun createAccount(
-        account: Account
-    ) = userService.createAccount(account).await()
 
     /**
      * 搜索天气质量

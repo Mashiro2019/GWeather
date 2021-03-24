@@ -1,15 +1,6 @@
 package com.example.gweather.model
 
-import com.example.gweather.R
 import com.example.gweather.adapter.BindingAdapterItem
-
-/**
- * 返回Json数据格式
- * @property status String
- * @property results List<User>
- * @constructor
- */
-data class CityResponse(val results:List<City>,val status:String)
 
 /**
  * 城市对象

@@ -1,5 +1,6 @@
 package com.example.gweather.activity
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -18,12 +19,14 @@ import com.example.gweather.fragment.CityFragment
 import com.example.gweather.fragment.DataFragment
 import com.example.gweather.fragment.HomeFragment
 import com.example.gweather.utils.AmapUtils
+import com.example.gweather.utils.PopupWindowUtils
 import com.example.gweather.viewModel.HomeActivityViewModel
+import com.permissionx.guolindev.PermissionX
 import kotlinx.coroutines.launch
 import nl.joery.animatedbottombar.AnimatedBottomBar
 
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
     companion object{
         const val GPS_SETTING = 100
     }
@@ -39,6 +42,17 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_home)
+
+        PermissionX.init(this)
+            .permissions(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
+            .request { allGranted, _, deniedList ->
+                if (allGranted) {
+                    Log.i("HomeActivity","All permissions are granted")
+                } else {
+                    PopupWindowUtils.showShortMsg(this,"These permissions are denied: $deniedList")
+                }
+            }
+
 
         AmapUtils.startClient()
 
