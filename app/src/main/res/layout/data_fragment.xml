@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/main_background"
-            tools:context=".fragment.DataFragment"
+            tools:context="com.gcode.gweather.fragment.DataFragment"
             tools:ignore="ScrollViewCount">
 
             <LinearLayout

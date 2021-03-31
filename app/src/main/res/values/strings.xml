@@ -1,7 +1,7 @@
 <resources>
     <string name="hello">你好，</string>
     <string name="icon">图标</string>
-    <string name="app_name">GWeather</string>
+    <string name="app_name">夏风天气</string>
     <string name="homePage">主界面</string>
     <string name="deviceInfPage">设备信息</string>
     <string name="login_page">登录</string>
@@ -17,7 +17,6 @@
     <string name="test">测试</string>
     <string name="bonded_bluetooth">已绑定设备</string>
     <string name="available_device">可用设备</string>
-    <string name="available_bluetooth">可用蓝牙</string>
     <string name="find">查找</string>
     <string name="bluetooth_visibility">蓝牙可见性</string>
     <string name="find_bluetooth">查找蓝牙</string>
@@ -50,11 +49,6 @@
     <string name="wind_speed">风速</string>
     <string name="cloudiness">云量</string>
     <string name="wind_direction_degree">风向角度</string>
-    <string name="windows_icon">窗户图标</string>
-    <string name="windows_switch">窗户开关</string>
-    <string name="room_picture">房间图片</string>
-    <string name="normal_switch">开关</string>
-    <string name="current_time">%1$d年%2$d月%3$d日%4$d时%5$d分%6$d秒</string>
     <string name="now_device_status">设备当前状态%1s</string>
     <string name="device_information">设备信息</string>
     <string name="test_module">测试模块</string>
@@ -83,10 +77,6 @@
     <string name="bond">未绑定</string>
     <string name="bonded">已绑定</string>
     <string name="animation">动画</string>
-    <string name="other_setting_icon">其他设置图标</string>
-    <string name="close_windows_in_rainy_days">雨天关窗</string>
-    <string name="close_windows_in_wind_days">大风关窗</string>
-    <string name="other_setting">其他设置</string>
     <string name="update">更新于</string>
     <string name="address">地址</string>
     <string name="visibility">能见度</string>
@@ -120,13 +110,7 @@
     <!--图标名称-->
     <string name="ic_search_city">搜索城市</string>
     <string name="ic_add_city">添加城市</string>
-    <string name="ic_bluetooth_disabled">关闭蓝牙</string>
-    <string name="ic_clear_list">清除列表</string>
-    <!--指令语句-->
-    <string name="please_enter_username">请输入用户名</string>
-    <string name="please_enter_password">请输入密码</string>
-    <string name="please_enter_tel">请输入电话</string>
-    <string name="please_enter_email">请输入邮箱</string>
+    <string name="ic_spin_list">旋转列表</string>
     <!--HomeFragment页面-->
     <string name="daily_high_temperature">%s℃</string>
     <string name="daily_low_temperature">最低温度%s℃</string>

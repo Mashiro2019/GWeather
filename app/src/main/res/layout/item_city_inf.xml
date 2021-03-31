@@ -4,7 +4,7 @@
     <data>
         <variable
             name="item"
-            type="com.example.gweather.model.PlaceInf" />
+            type="com.gcode.gweather.model.PlaceInf" />
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
