@@ -14,14 +14,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.gweather.R
-import com.gcode.gweather.adapter.FragmentAdapter
 import com.example.gweather.databinding.ActivityHomeBinding
+import com.gcode.gutils.MsgWindowUtils
+import com.gcode.gweather.adapter.FragmentAdapter
 import com.gcode.gweather.fragment.CityFragment
 import com.gcode.gweather.fragment.DataFragment
 import com.gcode.gweather.fragment.HomeFragment
 import com.gcode.gweather.utils.AmapUtils
 import com.gcode.gweather.viewModel.HomeActivityViewModel
-import com.gcode.gutils.MsgWindowUtils
 import com.permissionx.guolindev.PermissionX
 import kotlinx.coroutines.launch
 import nl.joery.animatedbottombar.AnimatedBottomBar
@@ -114,10 +114,7 @@ class HomeActivity : BaseActivity() {
 
         //设置顶部栏
         setSupportActionBar(binding.homeToolbar)
-        supportActionBar?.let {
-            it.setDisplayHomeAsUpEnabled(true)
-            it.setHomeAsUpIndicator(R.mipmap.title_bar)
-        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

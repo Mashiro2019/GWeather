@@ -6,10 +6,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-/**
- *作者:created by HP on 2021/3/10 22:24
- *邮箱:sakurajimamai2020@qq.com
- */
 interface PlaceService {
     /**
      * 调用searchPlace方法时Retrofit会自动发送GET请求

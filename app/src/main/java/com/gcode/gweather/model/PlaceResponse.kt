@@ -4,10 +4,6 @@ import com.example.gweather.R
 import com.gcode.gweather.adapter.BindingAdapterItem
 
 /**
- *作者:created by HP on 2021/3/11 11:19
- *邮箱:sakurajimamai2020@qq.com
- */
-/**
  * 返回城市数据列表数据
  * @property results List<Place>
  * @constructor

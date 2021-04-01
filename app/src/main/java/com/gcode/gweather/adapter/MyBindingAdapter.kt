@@ -10,10 +10,6 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.gweather.BR
 import com.example.gweather.R
 
-/**
- *作者:created by HP on 2021/3/8 17:23
- *邮箱:sakurajimamai2020@qq.com
- */
 class MyBindingAdapter(private var items: MutableList<BindingAdapterItem>) :
     RecyclerView.Adapter<MyBindingAdapter.BindingHolder>() {
 
