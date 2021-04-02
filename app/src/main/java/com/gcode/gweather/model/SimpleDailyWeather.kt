@@ -1,7 +1,7 @@
 package com.gcode.gweather.model
 
 import com.example.gweather.R
-import com.gcode.gweather.adapter.BindingAdapterItem
+import com.gcode.gutils.adapter.BaseItem
 import com.gcode.gweather.utils.AppUtils
 
 /**
@@ -18,10 +18,7 @@ class SimpleDailyWeather(
     val low: String,
     val windSpeed: String,
     val humidity: String
-) : BindingAdapterItem {
-    override fun getViewType(): Int {
-        return R.layout.item_daily_weather
-    }
+) : BaseItem {
 
     private val icon: String = when (text_day) {
         "晴" ->
@@ -39,5 +36,13 @@ class SimpleDailyWeather(
 
     fun getIcon(): String {
         return icon
+    }
+
+    override fun getItemBindViewType(): Int {
+        return R.layout.item_daily_weather
+    }
+
+    override fun getItemViewType(): Int {
+        return 0
     }
 }

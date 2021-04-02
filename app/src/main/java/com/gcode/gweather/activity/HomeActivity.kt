@@ -15,7 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.gweather.R
 import com.example.gweather.databinding.ActivityHomeBinding
-import com.gcode.gutils.MsgWindowUtils
+import com.gcode.gutils.utils.MsgWindowUtils
 import com.gcode.gweather.adapter.FragmentAdapter
 import com.gcode.gweather.fragment.CityFragment
 import com.gcode.gweather.fragment.DataFragment

@@ -11,16 +11,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.gweather.BR
 import com.example.gweather.R
-import com.gcode.gweather.adapter.BindingAdapterItem
-import com.gcode.gweather.adapter.MyBindingAdapter
 import com.example.gweather.databinding.HomeFragmentBinding
+import com.gcode.gutils.adapter.BaseBindingAdapter
+import com.gcode.gutils.adapter.BaseItem
+import com.gcode.gutils.utils.MsgWindowUtils
 import com.gcode.gweather.model.SimpleDailyWeather
 import com.gcode.gweather.utils.AppUtils
 import com.gcode.gweather.viewModel.HomeActivityViewModel
-import com.gcode.gutils.MsgWindowUtils
 
 class HomeFragment:Fragment() {
+
+    private class DataBindingAdapter(items:MutableList<BaseItem>):BaseBindingAdapter(items){
+        override fun setVariableId(): Int {
+            return BR.item
+        }
+    }
 
     private lateinit var binding:HomeFragmentBinding
 
@@ -29,8 +36,8 @@ class HomeFragment:Fragment() {
         ViewModelProvider(requireActivity())[HomeActivityViewModel::class.java]
     }
 
-    private val dailyWeatherList:MutableList<BindingAdapterItem> = ArrayList()
-    private val adapter = MyBindingAdapter(dailyWeatherList)
+    private val dailyWeatherList:MutableList<BaseItem> = ArrayList()
+    private val adapter = DataBindingAdapter(dailyWeatherList)
     private lateinit var layoutManager:RecyclerView.LayoutManager
 
     //加载布局
@@ -57,11 +64,6 @@ class HomeFragment:Fragment() {
         val username = bundle?.getString("username")
         MsgWindowUtils.showShortMsg(AppUtils.context,username.toString())
 
-        adapter.setItemClick(object : MyBindingAdapter.ItemClick {
-            override fun onItemClickListener(position: Int) {
-
-            }
-        })
         binding.dailyWeatherList.adapter = adapter
         binding.dailyWeatherList.layoutManager = layoutManager
 

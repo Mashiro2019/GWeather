@@ -15,9 +15,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.gweather.R
 import com.example.gweather.databinding.DataFragmentBinding
+import com.gcode.gutils.utils.MsgWindowUtils
+import com.gcode.gutils.utils.ScreenSizeUtils
 import com.gcode.gweather.viewModel.HomeActivityViewModel
-import com.gcode.gutils.MsgWindowUtils
-import com.gcode.gutils.ScreenSizeUtils
 import com.gcode.gweather.utils.AmapUtils
 import com.gcode.gweather.utils.AppUtils
 import com.gcode.gweather.utils.ViewUtils
