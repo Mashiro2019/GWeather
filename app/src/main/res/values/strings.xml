@@ -6,10 +6,6 @@
     <string name="deviceInfPage">设备信息</string>
     <string name="login_page">登录</string>
     <string name="support_bluetooth">支持蓝牙</string>
-    <string name="is_turn_on">蓝牙状态</string>
-    <string name="turn_on">打开蓝牙</string>
-    <string name="turn_off">关闭蓝牙</string>
-    <string name="room_name">房间名称</string>
     <string name="device_status">设备状态</string>
     <string name="device_status_setting">设备状态设置</string>
     <string name="window_angle_control">角度调整</string>
@@ -111,6 +107,12 @@
     <string name="ic_search_city">搜索城市</string>
     <string name="ic_add_city">添加城市</string>
     <string name="ic_spin_list">旋转列表</string>
+    <!--DataFragment页面-->
+    <string name="temperature_value">%s℃</string>
+    <string name="feelslike_temperature_value">体感温度 %s℃</string>
+    <string name="visibility_value">%skm</string>
+    <string name="wind_speed_value">%skm/h</string>
+    <string name="en_hans_weather_value">%s %s</string>
     <!--HomeFragment页面-->
     <string name="daily_high_temperature">%s℃</string>
     <string name="daily_low_temperature">最低温度%s℃</string>

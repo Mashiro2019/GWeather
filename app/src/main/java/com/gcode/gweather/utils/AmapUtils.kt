@@ -94,7 +94,7 @@ object AmapUtils {
     /**
      * 接收数据并解析
      */
-    private val mAMapLocationListener = AMapLocationListener() { amapLocation ->
+    private val mAMapLocationListener = AMapLocationListener { amapLocation ->
         if (amapLocation != null) {
             if (amapLocation.errorCode == 0) {
                 //https://lbs.amap.com/api/android-location-sdk/guide/android-location/getlocation

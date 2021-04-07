@@ -7,9 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -20,7 +18,6 @@ import com.example.gweather.R
 import com.example.gweather.databinding.CityFragmentBinding
 import com.gcode.gutils.adapter.BaseBindingAdapter
 import com.gcode.gutils.adapter.BaseItem
-import com.gcode.gutils.utils.MsgWindowUtils
 import com.gcode.gweather.model.PlaceInf
 import com.gcode.gweather.viewModel.HomeActivityViewModel
 
@@ -57,8 +54,8 @@ class CityFragment : Fragment() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
 
         layoutManager = LinearLayoutManager(binding.root.context)
         //设置设备搜索

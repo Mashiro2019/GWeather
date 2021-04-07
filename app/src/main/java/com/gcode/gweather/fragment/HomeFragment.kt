@@ -57,8 +57,8 @@ class HomeFragment:Fragment() {
     }
 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
 
         val bundle = arguments
         val username = bundle?.getString("username")
@@ -121,15 +121,21 @@ class HomeFragment:Fragment() {
                     dailyWeatherList.clear()
                     for (item in daily){
                         dailyWeatherList.add(
-                            SimpleDailyWeather(item.date,
-                            item.text_day,item.code_day,item.text_night,item.code_night,item.high,item.low,item.windSpeed,item.humidity)
+                            SimpleDailyWeather(
+                                item.date,
+                                item.text_day,
+                                item.high,
+                                item.low,
+                                item.windSpeed,
+                                item.humidity
+                            )
                         )
                     }
                     adapter.notifyDataSetChanged()
                 }
             }
 
-            isGpsOpen.observe(viewLifecycleOwner){it->
+            isGpsOpen.observe(viewLifecycleOwner){
                 if(it){
                     binding.dailyWeatherList.visibility = View.VISIBLE
                     binding.progressBar.visibility = View.GONE

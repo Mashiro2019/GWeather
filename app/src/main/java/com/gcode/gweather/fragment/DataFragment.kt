@@ -1,6 +1,5 @@
 package com.gcode.gweather.fragment
 
-import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
@@ -17,10 +16,9 @@ import com.example.gweather.R
 import com.example.gweather.databinding.DataFragmentBinding
 import com.gcode.gutils.utils.MsgWindowUtils
 import com.gcode.gutils.utils.ScreenSizeUtils
-import com.gcode.gweather.viewModel.HomeActivityViewModel
 import com.gcode.gweather.utils.AmapUtils
 import com.gcode.gweather.utils.AppUtils
-import com.gcode.gweather.utils.ViewUtils
+import com.gcode.gweather.viewModel.HomeActivityViewModel
 import com.scwang.smart.refresh.header.BezierRadarHeader
 import kotlinx.coroutines.launch
 
@@ -48,9 +46,8 @@ class DataFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    @SuppressLint("SimpleDateFormat", "SetTextI18n")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         /**
          * 初始化界面
          */
@@ -93,34 +90,37 @@ class DataFragment : Fragment() {
             }
 
             temperature.observe(viewLifecycleOwner, { temperatureValue ->
-                binding.temperatureValue.text = "$temperatureValue°"
+                binding.temperatureValue.text = String.format(
+                    AppUtils.context.resources.getString(R.string.temperature_value),
+                    temperatureValue
+                )
             })
 
             viewModel.feelslike.observe(viewLifecycleOwner) { feelslike ->
-                binding.feelsLikeValue.text = "体感温度 $feelslike°"
+                binding.feelsLikeValue.text = String.format(
+                    AppUtils.context.resources.getString(R.string.feelslike_temperature_value),
+                    feelslike
+                )
             }
 
             visibility.observe(viewLifecycleOwner) { visibilityValue ->
-                binding.visibilityValue.text = ViewUtils.setBottomAlignment(
-                    visibilityValue.toString(),
-                    "km",
-                    binding.visibilityValue.textSize.toInt()
+                binding.visibilityValue.text = String.format(
+                    AppUtils.context.resources.getString(R.string.visibility_value),
+                    visibilityValue
                 )
             }
 
             humidity.observe(viewLifecycleOwner, { humidityValue ->
-                binding.humidityValue.text = ViewUtils.setBottomAlignment(
-                    humidityValue.toString(),
-                    "%",
-                    binding.humidityValue.textSize.toInt()
+                binding.humidityValue.text = String.format(
+                    AppUtils.context.resources.getString(R.string.daily_humidity),
+                    humidityValue
                 )
             })
 
             windSpeed.observe(viewLifecycleOwner, { windSpeedValue ->
-                binding.windSpeedValue.text = ViewUtils.setBottomAlignment(
-                    windSpeedValue.toString(),
-                    "km/h",
-                    binding.windSpeedValue.textSize.toInt()
+                binding.windSpeedValue.text = String.format(
+                    AppUtils.context.resources.getString(R.string.wind_speed_value),
+                    windSpeedValue
                 )
             })
 
@@ -131,25 +131,45 @@ class DataFragment : Fragment() {
                 when (weather) {
                     "晴" -> {
                         binding.apply {
-                            weatherValue.text = "sun $weather"
+                            weatherValue.text =
+                                String.format(
+                                    AppUtils.context.resources.getString(R.string.en_hans_weather_value),
+                                    "sun",
+                                    weather
+                                )
                             weatherIcon.setImageResource(R.drawable.sun)
                         }
                     }
                     "多云" -> {
                         binding.apply {
-                            weatherValue.text = "cloudy $weather"
+                            weatherValue.text =
+                                String.format(
+                                    AppUtils.context.resources.getString(R.string.en_hans_weather_value),
+                                    "cloudy",
+                                    weather
+                                )
                             weatherIcon.setImageResource(R.drawable.partly_cloudy)
                         }
                     }
                     "阵雨" -> {
                         binding.apply {
-                            weatherValue.text = "showers $weather"
+                            weatherValue.text =
+                                String.format(
+                                    AppUtils.context.resources.getString(R.string.en_hans_weather_value),
+                                    "showers",
+                                    weather
+                                )
                             weatherIcon.setImageResource(R.drawable.light_rain)
                         }
                     }
                     "阴" -> {
                         binding.apply {
-                            weatherValue.text = "cloudy $weather"
+                            weatherValue.text =
+                                String.format(
+                                    AppUtils.context.resources.getString(R.string.en_hans_weather_value),
+                                    "cloudy",
+                                    weather
+                                )
                             weatherIcon.setImageResource(R.drawable.partly_cloudy)
                         }
                     }
@@ -177,7 +197,6 @@ class DataFragment : Fragment() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.R)
     private fun initUI() {
         binding.apply {
@@ -198,22 +217,26 @@ class DataFragment : Fragment() {
             //设置天气字体大小
             weatherValue.apply {
                 textSize = screenWidth / 50.toFloat()
-                weatherValue.text = "sun 晴"
+                weatherValue.text = String.format(
+                    AppUtils.context.resources.getString(R.string.feelslike_temperature_value),
+                    "sun",
+                    "晴"
+                )
             }
             //设置体表温度字体样式
             feelsLikeValue.textSize = screenWidth / 60.toFloat()
             //设置能见度字体样式
             visibilityValue.apply {
-                textSize = screenWidth / 80.toFloat()
+                textSize = screenWidth / 50.toFloat()
                 typeface = Typeface.defaultFromStyle(Typeface.BOLD)
             }
             //设置湿度字体样式
             humidityValue.apply {
-                textSize = screenWidth / 80.toFloat()
+                textSize = screenWidth / 50.toFloat()
                 typeface = Typeface.defaultFromStyle(Typeface.BOLD)
             }
             windSpeedValue.apply {
-                textSize = screenWidth / 80.toFloat()
+                textSize = screenWidth / 50.toFloat()
                 typeface = Typeface.defaultFromStyle(Typeface.BOLD)
             }
 

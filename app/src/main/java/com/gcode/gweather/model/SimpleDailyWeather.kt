@@ -10,10 +10,7 @@ import com.gcode.gweather.utils.AppUtils
  */
 class SimpleDailyWeather(
     val date: String,
-    private val text_day: String,
-    private val code_day: String,
-    private val text_night: String,
-    private val code_night: String,
+    text_day: String,
     val high: String,
     val low: String,
     val windSpeed: String,
@@ -39,7 +36,7 @@ class SimpleDailyWeather(
     }
 
     override fun getItemBindViewType(): Int {
-        return R.layout.item_daily_weather
+        return R.layout.daily_weather_recycle_item
     }
 
     override fun getItemViewType(): Int {

@@ -30,7 +30,7 @@ class PlaceInf(
 ) : BaseItem {
 
     override fun getItemBindViewType(): Int {
-        return R.layout.item_city_inf
+        return R.layout.city_inf_recycle_item
     }
 
     override fun getItemViewType(): Int {

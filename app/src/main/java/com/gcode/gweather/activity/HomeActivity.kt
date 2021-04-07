@@ -1,20 +1,25 @@
 package com.gcode.gweather.activity
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.gweather.R
-import com.example.gweather.databinding.ActivityHomeBinding
+import com.example.gweather.databinding.HomeActivityBinding
 import com.gcode.gutils.utils.MsgWindowUtils
 import com.gcode.gweather.adapter.FragmentAdapter
 import com.gcode.gweather.fragment.CityFragment
@@ -28,11 +33,8 @@ import nl.joery.animatedbottombar.AnimatedBottomBar
 
 
 class HomeActivity : BaseActivity() {
-    companion object {
-        const val GPS_SETTING = 100
-    }
 
-    private lateinit var binding: ActivityHomeBinding
+    private lateinit var binding: HomeActivityBinding
 
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeActivityViewModel::class.java]
@@ -40,9 +42,16 @@ class HomeActivity : BaseActivity() {
 
     private val fragments = ArrayList<Fragment>()
 
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        Log.d(this.localClassName,"resultCode is ${result.resultCode}")
+        if (result.resultCode == Activity.RESULT_CANCELED || result.resultCode == Activity.RESULT_CANCELED) {
+            isGpsOPen()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        binding = DataBindingUtil.setContentView(this, R.layout.home_activity)
 
         PermissionX.init(this)
             .permissions(
@@ -137,19 +146,19 @@ class HomeActivity : BaseActivity() {
         AmapUtils.destroyClient()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            GPS_SETTING -> {
-                isGpsOPen()
-            }
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        when (requestCode) {
+//            GPS_SETTING -> {
+//                isGpsOPen()
+//            }
+//        }
+//    }
 
     private fun isGpsOPen() {
         //判断GPS是否打开
         if (AmapUtils.isOPen(this)) {
-            Log.i("HomeActivity", "定位已经打开")
+            Log.i(this.localClassName, "定位已经打开")
             var location: String
             lifecycleScope.launch {
                 location = AmapUtils.getLocation()
@@ -158,7 +167,7 @@ class HomeActivity : BaseActivity() {
             }
         } else {
             viewModel.setGpsStatus(false)
-            Log.i("HomeActivity", "定位未打开")
+            Log.i(this.localClassName, "定位未打开")
             AlertDialog.Builder(this)
                 .setTitle("提示消息")
                 .setMessage("定位未打开,请前往设置界面打开")
@@ -166,7 +175,13 @@ class HomeActivity : BaseActivity() {
                     "确定"
                 ) { _, _ ->
                     val settingsIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                    startActivityForResult(settingsIntent, GPS_SETTING)
+                    if(packageManager.resolveActivity(settingsIntent,PackageManager.MATCH_DEFAULT_ONLY)!=null){
+                        try {
+                            startForResult.launch(settingsIntent)
+                        }catch (ex:ActivityNotFoundException){
+                            Log.e(this.localClassName,ex.message.toString())
+                        }
+                    }
                 }
                 .setNegativeButton("取消", null)
                 .create().show()

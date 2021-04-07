@@ -13,9 +13,6 @@ object ServiceCreator {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    //用户数据请求根路径
-    private const val USER_BASE_URL = "https://login.entropy2020.cn/"
-
     fun <T> weatherCreate(serviceClass: Class<T>): T = weatherRetrofit.create(serviceClass)
 
     //inline fun <reified T> create():T = create(T::class.java)
