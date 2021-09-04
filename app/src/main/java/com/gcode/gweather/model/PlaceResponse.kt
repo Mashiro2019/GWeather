@@ -1,7 +1,7 @@
 package com.gcode.gweather.model
 
 import com.example.gweather.R
-import com.gcode.gutils.adapter.BaseItem
+import com.gcode.tools.adapter.BaseUtilItem
 
 /**
  * 返回城市数据列表数据
@@ -27,7 +27,7 @@ class PlaceInf(
     val path: String,
     val timezone: String,
     val timezone_offset: String
-) : BaseItem {
+) : BaseUtilItem {
 
     override fun getItemBindViewType(): Int {
         return R.layout.city_inf_recycle_item

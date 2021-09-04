@@ -16,14 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gweather.BR
 import com.example.gweather.R
 import com.example.gweather.databinding.CityFragmentBinding
-import com.gcode.gutils.adapter.BaseBindingAdapter
-import com.gcode.gutils.adapter.BaseItem
 import com.gcode.gweather.model.PlaceInf
 import com.gcode.gweather.viewModel.HomeActivityViewModel
+import com.gcode.tools.adapter.BaseUtilBindingAdapter
 
 class CityFragment : Fragment() {
 
-    private class DataBindingAdapter(items: MutableList<BaseItem>):BaseBindingAdapter(items){
+    private class DataBindingAdapter(items: MutableList<PlaceInf>):
+        BaseUtilBindingAdapter<PlaceInf>(items){
         override fun setVariableId(): Int {
             return BR.item
         }
@@ -35,7 +35,7 @@ class CityFragment : Fragment() {
 
     private lateinit var binding:CityFragmentBinding
 
-    private val cityList:MutableList<BaseItem> = ArrayList()
+    private val cityList:MutableList<PlaceInf> = ArrayList()
 
     private val adapter = DataBindingAdapter(cityList)
     private lateinit var layoutManager:LinearLayoutManager
@@ -73,11 +73,15 @@ class CityFragment : Fragment() {
             }
         })
 
-        adapter.setOnItemClickListener(object : BaseBindingAdapter.OnItemClickListener {
+        adapter.setOnItemClickListener(object : BaseUtilBindingAdapter.OnItemClickListener {
             override fun onItemClick(itemView: View?, pos: Int) {
-                val city = cityList[pos] as PlaceInf
+                val city = cityList[pos]
                 viewModel.setPlaceInf(city)
                 viewModel.setCurrentPage(0)
+            }
+
+            override fun onItemClick(itemView: View?, pos: Int, itemId: Long) {
+
             }
         })
         binding.cityList.adapter = adapter

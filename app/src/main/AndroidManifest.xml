@@ -24,13 +24,17 @@
         <activity
             android:name="com.gcode.gweather.activity.BaseActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="2a076ec82fd6810af5f22216221d8e4c" />
 
-        <service android:name="com.amap.api.location.APSService" />
+        <service android:name="com.amap.api.location.APSService" android:exported="false"/>
 
         <activity android:name="com.gcode.gweather.activity.HomeActivity"
             android:exported="true">

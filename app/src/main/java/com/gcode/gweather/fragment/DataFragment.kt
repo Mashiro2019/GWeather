@@ -14,11 +14,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.gweather.R
 import com.example.gweather.databinding.DataFragmentBinding
-import com.gcode.gutils.utils.MsgWindowUtils
-import com.gcode.gutils.utils.ScreenSizeUtils
 import com.gcode.gweather.utils.AmapUtils
 import com.gcode.gweather.utils.AppUtils
 import com.gcode.gweather.viewModel.HomeActivityViewModel
+import com.gcode.tools.utils.MsgWindowUtils
+import com.gcode.tools.utils.ScreenSizeUtils
 import com.scwang.smart.refresh.header.BezierRadarHeader
 import kotlinx.coroutines.launch
 
@@ -203,8 +203,8 @@ class DataFragment : Fragment() {
             airQualityChartView.aa_drawChartWithChartOptions(viewModel.aqiChart())
 
             //获取屏幕高度
-            val screenHeight = ScreenSizeUtils.getMobileScreenHeight(AppUtils.context)
-            val screenWidth = ScreenSizeUtils.getMobileScreenWidth(AppUtils.context)
+            val screenHeight = ScreenSizeUtils.getMobileScreenHeight(this@DataFragment.requireContext())
+            val screenWidth = ScreenSizeUtils.getMobileScreenWidth(this@DataFragment.requireContext())
 
             firstDataCardView.minimumHeight = screenHeight / 20
 

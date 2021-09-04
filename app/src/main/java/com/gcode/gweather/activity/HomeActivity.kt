@@ -20,13 +20,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.gweather.R
 import com.example.gweather.databinding.HomeActivityBinding
-import com.gcode.gutils.utils.MsgWindowUtils
 import com.gcode.gweather.adapter.FragmentAdapter
 import com.gcode.gweather.fragment.CityFragment
 import com.gcode.gweather.fragment.DataFragment
 import com.gcode.gweather.fragment.HomeFragment
 import com.gcode.gweather.utils.AmapUtils
 import com.gcode.gweather.viewModel.HomeActivityViewModel
+import com.gcode.tools.utils.MsgWindowUtils
 import com.permissionx.guolindev.PermissionX
 import kotlinx.coroutines.launch
 import nl.joery.animatedbottombar.AnimatedBottomBar

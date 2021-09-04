@@ -14,16 +14,16 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.gweather.BR
 import com.example.gweather.R
 import com.example.gweather.databinding.HomeFragmentBinding
-import com.gcode.gutils.adapter.BaseBindingAdapter
-import com.gcode.gutils.adapter.BaseItem
-import com.gcode.gutils.utils.MsgWindowUtils
 import com.gcode.gweather.model.SimpleDailyWeather
 import com.gcode.gweather.utils.AppUtils
 import com.gcode.gweather.viewModel.HomeActivityViewModel
+import com.gcode.tools.adapter.BaseUtilBindingAdapter
+import com.gcode.tools.utils.MsgWindowUtils
 
 class HomeFragment:Fragment() {
 
-    private class DataBindingAdapter(items:MutableList<BaseItem>):BaseBindingAdapter(items){
+    private class DataBindingAdapter(items:MutableList<SimpleDailyWeather>):
+        BaseUtilBindingAdapter<SimpleDailyWeather>(items){
         override fun setVariableId(): Int {
             return BR.item
         }
@@ -36,7 +36,7 @@ class HomeFragment:Fragment() {
         ViewModelProvider(requireActivity())[HomeActivityViewModel::class.java]
     }
 
-    private val dailyWeatherList:MutableList<BaseItem> = ArrayList()
+    private val dailyWeatherList:MutableList<SimpleDailyWeather> = ArrayList()
     private val adapter = DataBindingAdapter(dailyWeatherList)
     private lateinit var layoutManager:RecyclerView.LayoutManager
 

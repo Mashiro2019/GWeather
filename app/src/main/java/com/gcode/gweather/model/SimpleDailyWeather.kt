@@ -1,8 +1,8 @@
 package com.gcode.gweather.model
 
 import com.example.gweather.R
-import com.gcode.gutils.adapter.BaseItem
 import com.gcode.gweather.utils.AppUtils
+import com.gcode.tools.adapter.BaseUtilItem
 
 /**
  *作者:created by HP on 2021/3/11 20:15
@@ -15,7 +15,7 @@ class SimpleDailyWeather(
     val low: String,
     val windSpeed: String,
     val humidity: String
-) : BaseItem {
+) : BaseUtilItem {
 
     private val icon: String = when (text_day) {
         "晴" ->
