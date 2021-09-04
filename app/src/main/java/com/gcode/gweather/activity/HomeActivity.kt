@@ -13,17 +13,14 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import com.example.gweather.R
-import com.example.gweather.databinding.HomeActivityBinding
-import com.gcode.gweather.adapter.FragmentAdapter
-import com.gcode.gweather.fragment.CityFragment
-import com.gcode.gweather.fragment.DataFragment
-import com.gcode.gweather.fragment.HomeFragment
+import androidx.viewpager2.widget.ViewPager2
+import com.gcode.gweather.R
+import com.gcode.gweather.adapter.MainActFragmentAdapter
+import com.gcode.gweather.databinding.HomeActivityBinding
 import com.gcode.gweather.utils.AmapUtils
 import com.gcode.gweather.viewModel.HomeActivityViewModel
 import com.gcode.tools.utils.MsgWindowUtils
@@ -32,7 +29,7 @@ import kotlinx.coroutines.launch
 import nl.joery.animatedbottombar.AnimatedBottomBar
 
 
-class HomeActivity : BaseActivity() {
+class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: HomeActivityBinding
 
@@ -40,14 +37,14 @@ class HomeActivity : BaseActivity() {
         ViewModelProvider(this)[HomeActivityViewModel::class.java]
     }
 
-    private val fragments = ArrayList<Fragment>()
-
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         Log.d(this.localClassName,"resultCode is ${result.resultCode}")
         if (result.resultCode == Activity.RESULT_CANCELED || result.resultCode == Activity.RESULT_CANCELED) {
             isGpsOPen()
         }
     }
+
+    private val tag = this.javaClass.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +57,7 @@ class HomeActivity : BaseActivity() {
             )
             .request { allGranted, _, deniedList ->
                 if (allGranted) {
-                    Log.i("HomeActivity", "All permissions are granted")
+                    Log.i(tag, "All permissions are granted")
                 } else {
                     MsgWindowUtils.showShortMsg(this, "These permissions are denied: $deniedList")
                 }
@@ -78,13 +75,13 @@ class HomeActivity : BaseActivity() {
             binding.bottomNavView.selectTabAt(it)
         }
 
-        val adapter = FragmentAdapter(fragments, supportFragmentManager)
+        val adapter = MainActFragmentAdapter(this)
         binding.viewPager.apply {
             this.adapter = adapter
             /**
              * view_pager滑动事件
              */
-            addOnPageChangeListener(object : OnPageChangeListener {
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrolled(i: Int, v: Float, i1: Int) {}
                 override fun onPageSelected(i: Int) {
                     // Selecting a tab at a specific position
@@ -113,14 +110,15 @@ class HomeActivity : BaseActivity() {
         })
     }
 
-    private fun initUI() {
-
-        fragments.apply {
-            add(HomeFragment())
-            add(DataFragment())
-            add(CityFragment())
+    override fun onBackPressed() {
+        if (binding.viewPager.currentItem == 0) {
+            super.onBackPressed()
+        } else {
+            binding.viewPager.currentItem = binding.viewPager.currentItem - 1
         }
+    }
 
+    private fun initUI() {
         //设置顶部栏
         setSupportActionBar(binding.homeToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -145,15 +143,6 @@ class HomeActivity : BaseActivity() {
         super.onDestroy()
         AmapUtils.destroyClient()
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        when (requestCode) {
-//            GPS_SETTING -> {
-//                isGpsOPen()
-//            }
-//        }
-//    }
 
     private fun isGpsOPen() {
         //判断GPS是否打开

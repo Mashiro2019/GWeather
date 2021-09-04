@@ -11,9 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.gweather.BR
-import com.example.gweather.R
-import com.example.gweather.databinding.HomeFragmentBinding
+import com.gcode.gweather.BR
+import com.gcode.gweather.R
+import com.gcode.gweather.databinding.HomeFragmentBinding
 import com.gcode.gweather.model.SimpleDailyWeather
 import com.gcode.gweather.utils.AppUtils
 import com.gcode.gweather.viewModel.HomeActivityViewModel

@@ -1,6 +1,6 @@
 package com.gcode.gweather.model
 
-import com.example.gweather.R
+import com.gcode.gweather.R
 import com.gcode.gweather.utils.AppUtils
 import com.gcode.tools.adapter.BaseUtilItem
 

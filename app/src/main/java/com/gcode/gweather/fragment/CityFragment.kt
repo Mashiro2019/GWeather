@@ -13,9 +13,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gweather.BR
-import com.example.gweather.R
-import com.example.gweather.databinding.CityFragmentBinding
+import com.gcode.gweather.BR
+import com.gcode.gweather.R
+import com.gcode.gweather.databinding.CityFragmentBinding
 import com.gcode.gweather.model.PlaceInf
 import com.gcode.gweather.viewModel.HomeActivityViewModel
 import com.gcode.tools.adapter.BaseUtilBindingAdapter

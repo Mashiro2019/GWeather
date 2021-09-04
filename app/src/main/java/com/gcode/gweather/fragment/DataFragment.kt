@@ -12,8 +12,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.gweather.R
-import com.example.gweather.databinding.DataFragmentBinding
+import com.gcode.gweather.R
+import com.gcode.gweather.databinding.DataFragmentBinding
 import com.gcode.gweather.utils.AmapUtils
 import com.gcode.gweather.utils.AppUtils
 import com.gcode.gweather.viewModel.HomeActivityViewModel
