@@ -66,7 +66,9 @@ class HomeActivity : AppCompatActivity() {
 
         AmapUtils.startClient()
 
-        initUI()
+        //设置顶部栏
+        setSupportActionBar(binding.homeToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         isGpsOPen()
 
@@ -78,18 +80,8 @@ class HomeActivity : AppCompatActivity() {
         val adapter = MainActFragmentAdapter(this)
         binding.viewPager.apply {
             this.adapter = adapter
-            /**
-             * view_pager滑动事件
-             */
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageScrolled(i: Int, v: Float, i1: Int) {}
-                override fun onPageSelected(i: Int) {
-                    // Selecting a tab at a specific position
-                    binding.bottomNavView.selectTabAt(i)
-                }
 
-                override fun onPageScrollStateChanged(i: Int) {}
-            })
+            isUserInputEnabled = false
         }
 
         binding.bottomNavView.setOnTabSelectListener(object :
@@ -118,12 +110,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun initUI() {
-        //设置顶部栏
-        setSupportActionBar(binding.homeToolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.actionbar_menu, menu)
@@ -147,7 +133,7 @@ class HomeActivity : AppCompatActivity() {
     private fun isGpsOPen() {
         //判断GPS是否打开
         if (AmapUtils.isOPen(this)) {
-            Log.i(this.localClassName, "定位已经打开")
+            Log.d(tag, "定位已经打开")
             var location: String
             lifecycleScope.launch {
                 location = AmapUtils.getLocation()
@@ -156,7 +142,7 @@ class HomeActivity : AppCompatActivity() {
             }
         } else {
             viewModel.setGpsStatus(false)
-            Log.i(this.localClassName, "定位未打开")
+            Log.d(tag, "定位未打开")
             AlertDialog.Builder(this)
                 .setTitle("提示消息")
                 .setMessage("定位未打开,请前往设置界面打开")
@@ -168,7 +154,7 @@ class HomeActivity : AppCompatActivity() {
                         try {
                             startForResult.launch(settingsIntent)
                         }catch (ex:ActivityNotFoundException){
-                            Log.e(this.localClassName,ex.message.toString())
+                            Log.e(tag,ex.message.toString())
                         }
                     }
                 }

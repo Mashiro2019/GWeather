@@ -131,8 +131,8 @@ class HomeFragment:Fragment() {
                             )
                         )
                     }
-                    adapter.notifyDataSetChanged()
                 }
+                adapter.notifyDataSetChanged()
             }
 
             isGpsOpen.observe(viewLifecycleOwner){
